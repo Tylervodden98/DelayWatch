@@ -4,50 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context=".MainActivity">
-
+    tools:context=".Register">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextRegisterName"
         android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
         android:layout_height="40dp"
+        android:layout_below="@id/imageView"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_user"
+        android:ems="10"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/editTextRegisterEmail"
+        android:layout_width="200dp"
         android:layout_centerInParent="true"
+        android:layout_height="40dp"
+        android:layout_below="@id/editTextRegisterName"
+        android:layout_marginTop="20dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_action_user"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
         android:textSize="16dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="159dp" />
 
     <EditText
-        android:layout_below="@id/editTextTextPersonName"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextRegisterPassword"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:layout_width="198dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="15dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_action_pass"
         android:ems="10"
+        android:layout_below="@id/editTextRegisterEmail"
+
         android:hint="Password"
         android:inputType="textPassword"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <androidx.cardview.widget.CardView
 
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewRegister"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@id/editTextTextPassword"
+        android:layout_below="@id/editTextRegisterPassword"
         android:layout_centerHorizontal="true"
         android:layout_margin="75dp"
 
@@ -66,24 +75,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Login"
+                android:text="Register"
                 android:textColor="@color/teal"
                 android:textSize="18sp"
 
                 />
 
+
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/Register"
+        android:id="@+id/goBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/cardView"
-
-        android:text="Register Here." />
+        android:layout_below="@id/cardViewRegister"
+        android:text="Already have an account?" />
 
     <ImageView
         android:id="@+id/imageView"
