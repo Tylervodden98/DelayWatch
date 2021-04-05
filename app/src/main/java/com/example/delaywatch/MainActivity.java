@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView mLogin;
     private FirebaseAuth mAuth;
     private TextView mRegister;
+    private boolean mLocationPermission = false;
 
 
     @Override
@@ -59,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                  public void onComplete(@NonNull Task<AuthResult> task) {
                      if(task.isSuccessful())
                      {
-                         Toast.makeText(MainActivity.this , "Logged In Successfully", Toast.LENGTH_SHORT).show() ;
+                         Toast.makeText(MainActivity.this , "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                         startActivity(new Intent(getApplicationContext(),MapsActivity.class));
 
                      }
                      else
