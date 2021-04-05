@@ -61,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(s));
 
+
         //googleMap.setOnPolylineClickListener(this);
         //googleMap.setOnPolygonClickListener(this);
         String url = makeUrl(start.getPosition(), dest.getPosition(), "driving");
@@ -96,6 +97,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "" + getString(R.string.google_maps_key);
         return url;
     }
+
+
 /*
     @Override
     public void OnPolygonClickListener(GoogleMap googleMap){
