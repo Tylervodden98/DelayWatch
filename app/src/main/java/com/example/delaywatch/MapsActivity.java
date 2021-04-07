@@ -358,16 +358,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 )
 
         );
-        //For changing transit mode
-        /*
-        TransitMode modes[] = 'TRANSIT';
-        directions.mode(
-                new com.google.maps.model.TravelMode(
-                        modes);
-*/
-        //directions.transitMode(mode);
-        //TravelMode x = "transit";
-       // directions.mode(x);
+        directions.mode(TravelMode.TRANSIT);
 
         Log.d(TAG, "calculateDirections: destination: " + destination.toString());
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
