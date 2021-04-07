@@ -7,12 +7,13 @@
     tools:context=".DelayActivity">
 
     <TextView
-        android:id="@+id/allDelays"
+        android:id="@+id/allDelaysText"
         android:layout_width="380dp"
         android:layout_height="570dp"
         android:text="TextView"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="73dp" />
+        tools:layout_editor_absoluteY="73dp"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/updateButton"
@@ -20,13 +21,15 @@
         android:layout_height="wrap_content"
         android:text="Update"
         tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="655dp" />
+        tools:layout_editor_absoluteY="655dp"
+        tools:ignore="MissingConstraints"/>
 
     <TextView
-        android:id="@+id/allDelayTitle"
+        android:id="@+id/allDelaysTitle"
         android:layout_width="171dp"
         android:layout_height="36dp"
         android:text="ALL DELAYS"
         tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
