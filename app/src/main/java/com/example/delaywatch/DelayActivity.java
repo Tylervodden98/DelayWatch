@@ -37,7 +37,7 @@ public class DelayActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Document doc = Jsoup.connect("http://ttc.ca/mobile/all_service_alerts.jsp").get();
+                Document doc = Jsoup.connect("https://ttc.ca/mobile/all_service_alerts.jsp").get();
                 genText = doc.text();
             } catch (Exception e){e.printStackTrace();}
             return null;
