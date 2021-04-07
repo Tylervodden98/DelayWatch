@@ -37,9 +37,10 @@
                 android:textColor="#000"
                 android:id="@+id/input_search"
                 android:background="@null"
-                android:hint="Enter Address/Station"
+                android:hint="Enter Destination Address/Station"
                 android:imeOptions="actionSearch"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
 </RelativeLayout>
+
 

@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,6 +44,8 @@ import com.google.maps.PendingResult;
 import com.google.maps.internal.PolylineEncoding;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.TransitMode;
+import com.google.maps.model.TravelMode;
 
 
 import java.io.IOException;
@@ -56,8 +57,8 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     //Button btnGetDirection;
-    MarkerOptions start, dest;
-    Marker x;
+    MarkerOptions  dest;
+    Marker start,x;
     Polyline currentPolyline;
     private GeoApiContext mGeoApiContext = null;
     private static final String TAG = "UserListFragment";
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean LocationPermission = false;
     private static int default_zoom = 15;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+
     //For Timer
     long begin = System.nanoTime();
     long finish = System.nanoTime();
@@ -74,14 +76,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     long timeElapsed = finish - begin;
 
     //Widgets
-    private EditText mSearchText;
-
+    private EditText mSearchText, mSearchText2;
+    LatLng set,xyz;
+    MarkerOptions destend = new MarkerOptions().position(new LatLng(43.6943, -79.2890)).title("Destination");
+    //MarkerOptions set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         getLocationPerms();
+        if(LocationPermission){
+            getDeviceLocation();
+        }
         //gets input from search
         mSearchText = (EditText) findViewById(R.id.input_search);
         init();
@@ -94,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //For Autocomplete Fragment
 
         //get places
-        start = new MarkerOptions().position(new LatLng(27.658143, 85.3199503)).title("Start");
+        //start = new MarkerOptions().position(new LatLng(27.658143, 85.3199503)).title("Start");
         dest = new MarkerOptions().position(new LatLng(27.667491, 85.3208583)).title("Destination");
         Log.d(TAG, "time passed: " + timeElapsed);
         //String url = makeUrl(start.getPosition(), dest.getPosition(), "driving");
@@ -102,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void initMap(){
+    private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapsActivity.this);
     }
@@ -116,6 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 LocationPermission = true;
+                initMap();
             } else {
                 ActivityCompat.requestPermissions(this,
                         permissions,
@@ -142,28 +150,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     LocationPermission = true;
                     //onMapReady();
-                    initMap();
+
                 }
             }
         }
     }
-/*
+
     private void getDeviceLocation() {
         //getting location of device
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
-
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try {
             if (LocationPermission) {
                 final Task<Location> location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener<Location>() {
+                location.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             //found location
-                            if(mFusedLocationProviderClient.getLastLocation() != null) {
+                            if (mFusedLocationProviderClient.getLastLocation() != null) {
                                 Location currentLoc = (Location) task.getResult();
-                                //LatLng xyz = new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude());
-                                moveCamera(new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude()), default_zoom, "Your Location");
+                                xyz = new LatLng(currentLoc.getLatitude(), currentLoc.getLongitude());
+                                start = MakeMarker(xyz);
+                                //start = new MarkerOptions().position(xyz).title("Start");
+                                moveCamera((xyz), default_zoom, "Your Location");
                             }
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -178,7 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e(TAG, "getDeviceLocation: Security Exception: " + e.getMessage());
         }
     }
-*/
+
     private void init() {
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -207,9 +216,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Address address = list.get(0);
             Log.d(TAG, "geoLocation: found location" + address.toString());
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), default_zoom, address.getAddressLine(0));
+            set = new LatLng(address.getLatitude(), address.getLongitude());
             hideKeyboard();
         }
+        if (mSearchText.getText().toString() != null) {
+            calculateDirections(MakeMarker(set));
+        }
     }
+
 
     /**
      * Manipulates the map once available.
@@ -224,7 +238,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        if (LocationPermission = true) {
+            getDeviceLocation();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+        }
         //getting starting location from user data
 /*
         if (LocationPermission = true) {
@@ -243,15 +270,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 */
-
+/*
         LatLng s = new LatLng(27.667491, 85.3208583);
         x = mMap.addMarker(new MarkerOptions()
                 .position(s)
                 .title("Destination"));
         x.setTag(0);
 
+ */
+        /*
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(title);
+        mMap.addMarker(options);
+
+
+         */
+        /*
+     start = new MarkerOptions()
+               .position(xyz)
+               .title("Your current Location");
        mMap.addMarker(start);
-       mMap.addMarker(dest);
+
+       mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(xyz,default_zoom));
+
+
+         */
+       mMap.addMarker(destend);
 
         if (mGeoApiContext == null) {
             mGeoApiContext = new GeoApiContext.Builder()
@@ -259,8 +304,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();
         }
 
+
         //method to find quickest path
-        calculateDirections(x);
+        //destend to marker
+
+
+        //calculateDirections(x);
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(s));
         /*
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
@@ -284,6 +333,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private Marker MakeMarker(LatLng x){
+        Marker y = mMap.addMarker(new MarkerOptions()
+                .position(x)
+                .title("Destination"));
+        y.setTag(0);
+        return y;
+    }
+
     private void calculateDirections(Marker marker) {
         Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -299,7 +356,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         start.getPosition().latitude,
                         start.getPosition().longitude
                 )
+
         );
+        //For changing transit mode
+        /*
+        TransitMode modes[] = 'TRANSIT';
+        directions.mode(
+                new com.google.maps.model.TravelMode(
+                        modes);
+*/
+        //directions.transitMode(mode);
+        //TravelMode x = "transit";
+       // directions.mode(x);
+
         Log.d(TAG, "calculateDirections: destination: " + destination.toString());
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
