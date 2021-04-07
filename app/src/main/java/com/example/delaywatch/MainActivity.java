@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ViewDelayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),TParserActivity.class));
+                startActivity(new Intent(getApplicationContext(),DelayActivity.class));
             }
         });
         mRegister.setOnClickListener(new View.OnClickListener() {
