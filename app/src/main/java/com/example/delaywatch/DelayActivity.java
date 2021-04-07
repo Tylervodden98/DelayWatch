@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,8 +18,9 @@ public class DelayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(DelayActivity.this , "Logged In Successfully", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_delay);
-
+        Toast.makeText(DelayActivity.this , "Logged In Successfully", Toast.LENGTH_SHORT).show();
         delayText = (TextView)findViewById(R.id.allDelaysText);
         Button updateButton = (Button)findViewById(R.id.updateButton);
 
