@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView mRegister;
     private boolean mLocationPermission = false;
+    private CardView ViewDelayButton;
 
 
     @Override
@@ -35,7 +36,14 @@ public class MainActivity extends AppCompatActivity {
         mLogin = findViewById(R.id.cardView);
         email = findViewById(R.id.editTextTextPersonName);
         password = findViewById(R.id.editTextTextPassword);
+        ViewDelayButton = findViewById(R.id.viewDelayButton);
         mAuth = FirebaseAuth.getInstance();
+        ViewDelayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),DelayActivity.class));
+            }
+        });
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

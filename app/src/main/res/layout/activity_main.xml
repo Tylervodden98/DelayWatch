@@ -74,7 +74,37 @@
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
 
+        android:id="@+id/viewDelayButton"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/Register"
+        app:cardBackgroundColor="@color/dark_teal"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="492dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/viewDelay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="View Current delays"
+                android:textColor="@color/teal"
+                android:textSize="12sp"
+
+                />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/Register"
         android:layout_width="wrap_content"
@@ -93,5 +123,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp"
         app:srcCompat="@drawable/delay_watch_logo" />
+
+
 
 </RelativeLayout>
