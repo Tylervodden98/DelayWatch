@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".DelayActivity">
 
+    <TextView
+        android:id="@+id/allDelays"
+        android:layout_width="380dp"
+        android:layout_height="570dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="655dp" />
+
+    <TextView
+        android:id="@+id/allDelayTitle"
+        android:layout_width="171dp"
+        android:layout_height="36dp"
+        android:text="ALL DELAYS"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
