@@ -33,13 +33,11 @@ public class DelayActivity extends AppCompatActivity {
     public class updateDelay extends AsyncTask<Void, Void, Void> {
         String genText;
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(Void... params) {
             try {
                 Document doc = Jsoup.connect("http://ttc.ca/mobile/all_service_alerts.jsp").get();
                 genText = doc.text();
-            } catch (Exception e){
-                System.err.println(e.getMessage());
-            }
+            } catch (Exception e){e.printStackTrace();}
             return null;
         }
 
