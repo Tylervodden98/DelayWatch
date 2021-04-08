@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,8 +17,10 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +59,9 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
+    private Button startTrip;
+    private Button viewDelays;
+
     //Button btnGetDirection;
     MarkerOptions  dest;
     Marker start,x;
@@ -85,6 +91,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        startTrip = findViewById(R.id.startTrip);
+        viewDelays = findViewById(R.id.viewDelays);
         getLocationPerms();
         if(LocationPermission){
             getDeviceLocation();
@@ -92,6 +100,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //gets input from search
         mSearchText = (EditText) findViewById(R.id.input_search);
         init();
+        viewDelays.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),DelayActivity.class));
+            }
+        });
+        startTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start the Timer.
+            }
+        });
         //btnGetDirection = findViewById(R.id.btnGetDirection);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
