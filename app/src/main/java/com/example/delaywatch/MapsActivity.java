@@ -1,10 +1,17 @@
 package com.example.delaywatch;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import android.content.Context;
+import android.content.DialogInterface;
+import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,7 +23,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
-
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -24,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,9 +42,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.DirectionsApiRequest;
-//import com.google.maps.PlaceAutocompleteRequest;
-//import com.google.maps.PlaceDetailsRequest;
-//import com.google.maps.PlacesApi;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.maps.GeoApiContext;
@@ -47,21 +49,25 @@ import com.google.maps.PendingResult;
 import com.google.maps.internal.PolylineEncoding;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
-import com.google.maps.model.TransitMode;
-import com.google.maps.model.TravelMode;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private Button startTrip;
-    private Button viewDelays;
-
+     Button startTrip;
+     Button viewDelays;
+     TextView timerText;
+    Timer timer;
+    TimerTask timerTask;
+    Double time = 0.0;
+    boolean timerStarted = false;
     //Button btnGetDirection;
     MarkerOptions  dest;
     Marker start,x;
@@ -90,8 +96,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        timer = new Timer();
+
         setContentView(R.layout.activity_maps);
-        startTrip = findViewById(R.id.startTrip);
+        timerText = findViewById(R.id.timerText1);
+        startTrip = findViewById(R.id.startTrip1);
         viewDelays = findViewById(R.id.viewDelays);
         getLocationPerms();
         if(LocationPermission){
@@ -100,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //gets input from search
         mSearchText = (EditText) findViewById(R.id.input_search);
         init();
+        hideKeyboard();
         viewDelays.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +119,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Start the Timer.
+                if(timerStarted == false)
+                {
+                    timerStarted = true;
+                   startTrip.setText("End Trip");
+                    startTimer();
+                }
+                else
+                {
+                    timerStarted = false;
+                   startTrip.setText("Start Trip");
+                    resetTapped();
+                }//Start the Timer.
             }
+
+
         });
         //btnGetDirection = findViewById(R.id.btnGetDirection);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -128,6 +151,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //new FetchURL(MapsActivity.this).execute(url, "driving");
 
     }
+    private void startTimer()
+    {
+        timerTask = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        time++;
+                        timerText.setText(getTimerText());
+                    }
+                });
+            }
+
+        };
+        timer.scheduleAtFixedRate(timerTask, 0 ,1000);
+    }
+    public void resetTapped() {
+
+
+
+                    timerTask.cancel();
+
+                    time = 0.0;
+                    timerStarted = false;
+                    timerText.setText(formatTime(0, 0, 0));
+
+
+            }
+
+
+    private String getTimerText()
+    {
+        int rounded = (int) Math.round(time);
+
+        int seconds = ((rounded % 86400) % 3600) % 60;
+        int minutes = ((rounded % 86400) % 3600) / 60;
+        int hours = ((rounded % 86400) / 3600);
+
+        return formatTime(seconds, minutes, hours);
+    }
+
+    private String formatTime(int seconds, int minutes, int hours)
+    {
+        return String.format("%02d",hours) + ":" + String.format("%02d",minutes) + ":" + String.format("%02d",seconds);
+    }
+
+
 
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

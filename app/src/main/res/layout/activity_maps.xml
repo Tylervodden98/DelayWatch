@@ -49,11 +49,11 @@
         >
 
         <Button
-            android:id="@+id/startTrip"
+            android:id="@+id/startTrip1"
             android:text="Start Trip"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="220dp"
+            android:layout_marginLeft="200dp"
             android:layout_marginTop="200dp"
             android:background="@color/dark_teal"
             />
@@ -62,16 +62,17 @@
             android:text="View Delays"
             android:background="@color/dark_teal"
             android:id="@+id/viewDelays"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="200dp" />_
         <TextView
+            android:id="@+id/timerText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="60sp"
             android:text="00:00:00"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="75dp"
             android:layout_marginTop="95dp"
 
             />
