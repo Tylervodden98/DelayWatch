@@ -111,8 +111,8 @@
 
     <TextView
         android:id="@+id/allDelaysTitle"
-        android:layout_width="309dp"
-        android:layout_height="31dp"
+        android:layout_width="344dp"
+        android:layout_height="54dp"
         android:layout_marginStart="71dp"
         android:layout_marginLeft="71dp"
         android:layout_marginTop="16dp"
@@ -121,7 +121,7 @@
         android:layout_marginBottom="22dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="UNPLANNED DELAYS"
+        android:text="ACTIVE UNPLANNED DELAYS"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/allDelaysText"

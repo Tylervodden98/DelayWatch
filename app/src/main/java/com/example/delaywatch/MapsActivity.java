@@ -86,7 +86,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText mSearchText, mSearchText2;
     LatLng set,xyz;
     MarkerOptions destend = new MarkerOptions().position(new LatLng(43.6943, -79.2890)).title("Destination");
-    //MarkerOptions set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,10 +139,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //get places
         //start = new MarkerOptions().position(new LatLng(27.658143, 85.3199503)).title("Start");
-        dest = new MarkerOptions().position(new LatLng(27.667491, 85.3208583)).title("Destination");
+        //dest = new MarkerOptions().position(new LatLng(27.667491, 85.3208583)).title("Destination");
         Log.d(TAG, "time passed: " + timeElapsed);
-        //String url = makeUrl(start.getPosition(), dest.getPosition(), "driving");
-        //new FetchURL(MapsActivity.this).execute(url, "driving");
 
     }
     private void startTimer()
@@ -342,50 +339,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             mMap.setMyLocationEnabled(true);
         }
-        //getting starting location from user data
-/*
-        if (LocationPermission = true) {
-            getDeviceLocation();
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
 
-        }
-*/
-/*
-        LatLng s = new LatLng(27.667491, 85.3208583);
-        x = mMap.addMarker(new MarkerOptions()
-                .position(s)
-                .title("Destination"));
-        x.setTag(0);
-
- */
-        /*
-        MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title(title);
-        mMap.addMarker(options);
-
-
-         */
-        /*
-     start = new MarkerOptions()
-               .position(xyz)
-               .title("Your current Location");
-       mMap.addMarker(start);
-
-       mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(xyz,default_zoom));
-
-
-         */
        mMap.addMarker(destend);
 
         if (mGeoApiContext == null) {
@@ -394,32 +348,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();
         }
 
-
-        //method to find quickest path
-        //destend to marker
-
-
-        //calculateDirections(x);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(s));
-        /*
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-        .clickable(true)
-        .add(
-                new LatLng(27.658143, 85.3199503),
-                new LatLng(27.667491, 85.3208583)));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(s));
-
-
-        //googleMap.setOnPolylineClickListener(this);
-        //googleMap.setOnPolygonClickListener(this);
-        String url = makeUrl(start.getPosition(), dest.getPosition(), "driving");
-        */
-
-        // Add a marker in Sydney and move the camera
-        // LatLng sydney = new LatLng(-34, 151);
-        // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
     }
 
